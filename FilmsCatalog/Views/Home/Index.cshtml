@@ -1,8 +1,52 @@
-﻿@{
+﻿@model IndexViewModel
+@using FilmsCatalog.Helpers
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+@foreach (var film in Model.Films)
+{
+    <a style="display: block; margin-bottom: 20px; text-decoration: none;" href="@Url.ActionLink("Details", "Film", new { Id = film.Id })">
+        <div style="display:flex">
+            <div style="margin: 0px 15px 0px 0px">
+                @if (film.Poster != null)
+                {
+                    <img style="width: 192px; height: 288px; object-fit: cover; border: 2px dashed; border-radius: 6px; " src="data:image/jpeg;base64,@(Convert.ToBase64String(film.Poster))" />
+                }
+                else
+                {
+                    <img style="width: 192px; height: 288px; object-fit: cover;" src="" />
+                }
+            </div>
+            <div>
+                <div>
+                    <h2 style="color: #1A1A2E; font-weight: bold">@film.Name (@film.ReleaseYear.Year)</h2>
+                </div>
+                <div>
+                    @film.Description
+                </div>
+                <div>
+                    Режиссёр: @film.Director
+                </div>
+                <br>
+                <div>
+                    Дата выпуска: @film.ReleaseYear.ToString("dd MMMM yyyy")
+                </div>
+            </div>
+        </div>
+    </a>
+}
+
+<br />
+<div class="btn-group">
+    @Html.PageLinks(Model.PageInfo, x => Url.Action("Index", new { page = x }))
 </div>
+
+@*<div>
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    </div>
+</div>*@

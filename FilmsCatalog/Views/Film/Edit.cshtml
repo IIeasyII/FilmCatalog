@@ -1,0 +1,49 @@
+﻿@model Film
+
+<h2>Редактировать фильм</h2>
+
+<form asp-controller="Film" asp-action="Edit" method="post" enctype="multipart/form-data" style="margin-top: 2em;">
+    <div class="form-row">
+        <div class="form-group col-md-4 col-sm-6 col-12">
+            <label asp-for="Name">Название</label>
+            <input asp-for="Name" class="form-control">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4 col-sm-6 col-12">
+            <label asp-for="Description">Описание</label>
+            <input asp-for="Description" class="form-control">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4 col-sm-6 col-12">
+            <label asp-for="ReleaseYear">Дата выпуска</label>
+            <input type="date" asp-for="ReleaseYear" class="form-control">
+            <span asp-validation-for="ReleaseYear" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4 col-sm-6 col-12">
+            <label asp-for="Director">Режиссёр</label>
+            <input asp-for="Director" class="form-control">
+        </div>
+    </div>
+    @if (Model.Poster != null)
+    {
+        <img style="width: 192px; height: 288px; object-fit: cover; margin: 0px 0px 10px 0px " src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Poster))" />
+    }
+    else
+    {
+        <img style="width: 192px; height: 288px; object-fit: cover; margin: 0px 0px 10px 0px " src="" />
+    }
+    <div class="form-row">
+        <div class="form-group col-md-4 col-sm-6 col-12">
+            <input asp-for="Poster" type="file">
+        </div>
+    </div>
+    <div class="form-group">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <button type="submit" class="btn btn-outline-primary">Сохранить</button>
+    </div>
+</form>

@@ -1,0 +1,43 @@
+﻿@model FilmViewModel
+
+<div style="display:flex;">
+    <div style="margin: 0px 15px 0px 0px">
+        @if (Model.PosterImage != null)
+        {
+            <img style="width: 256px; height: 384px; object-fit: cover; border: 2px dashed; border-radius: 6px;" src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.PosterImage))" />
+        }
+        else
+        {
+            <img style="width: 256px; height: 384px; object-fit: cover;" src="" />
+        }
+    </div>
+    <div>
+        @if (Model.Author.UserName == User.Identity.Name)
+        {
+            <a href="@Url.ActionLink("Edit", "Film", new { Id = Model.Id})" class="btn btn-outline-primary">Изменить</a>
+        }
+        <div>
+            <h2 style="color: #1A1A2E; font-weight: bold">@Model.Name</h2>
+
+        </div>
+        <div>
+            <p>@Model.Description</p>
+        </div>
+        <div>
+            <table width="100%">
+                <tr>
+                    <td>Режиссёр</td>
+                    <td>@Model.Director</td>
+                </tr>
+                <tr>
+                    <td>Год выпуска</td>
+                    <td>@Model.ReleaseYear.ToString("dd MMMM yyyy")</td>
+                </tr>
+                <tr>
+                    <td>Авто публикации</td>
+                    <td>@Model.Author.UserName</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
